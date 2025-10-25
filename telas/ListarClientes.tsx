@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
 import Cliente from '../componentes/Cliente';
 
 import api from '../componentes/Api';
@@ -17,6 +17,20 @@ const navigation = useNavigation();
  async function buscaClientes() {
     const response = await api.get('clientes');
     setClientes(response.data);
+ }
+
+ async function excluir(id: number) {
+    try{
+        const r = await api.delete(`clientes/${id}`);
+        Alert.alert("Excluir", `${JSON.stringify(r.data)}`);
+        buscaClientes();
+    }catch(e: any){
+        Alert.alert("Erro ao Excluir",e?.message ?? "Erro desconhecido");
+    }
+ }
+
+ function editar(item:ClienteType){
+    navigation.navigate('TelaEditCliente' as never, {cliente: item} as never);
  }
 
  useEffect(
@@ -47,6 +61,8 @@ const navigation = useNavigation();
                         cpf={item.cpf}
                         saldo={item.saldo}
                         id={item.id}
+                        onEditar={()=>editar(item)}
+                        onExcluir={()=>excluir(item.id)}
                     />
                 }
                  style={styles.lista}

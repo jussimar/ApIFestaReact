@@ -7,13 +7,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './telas/Home';
 import ListarClientes from './telas/ListarClientes';
 import TelaCadCliente from './telas/TelaCadCliente';
+import TelaEditCliente from './telas/TelaEditCliente';
 
 
 const RootStack = createNativeStackNavigator({
   screens: {
     Home: Home,
     ListarClientes:ListarClientes,
-    TelaCadCliente:TelaCadCliente
+    TelaCadCliente:TelaCadCliente,
+    TelaEditCliente:TelaEditCliente
   },
 });
 
