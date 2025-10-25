@@ -4,11 +4,15 @@ import Cliente from '../componentes/Cliente';
 
 import api from '../componentes/Api';
 
+import { useNavigation } from '@react-navigation/native';
+
 export default function ListarClientes() {
 
 type ClienteType = {id:number, nome:string, cpf:string, saldo:number};
 
 const [clientes, setClientes] = useState<ClienteType[]>([]);
+
+const navigation = useNavigation();
 
  async function buscaClientes() {
     const response = await api.get('clientes');
@@ -21,12 +25,12 @@ const [clientes, setClientes] = useState<ClienteType[]>([]);
     },[]
  )
  return (
-    <View style={styles.container}>
+    <View>
        
-
-
         <View style={styles.bloco}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn}
+            onPress={()=>navigation.navigate('TelaCadCliente' as never)}
+            >
                 <Text style={styles.txtBtn}>Cadastrar Novo Cliente</Text>
             </TouchableOpacity>
         </View>
@@ -62,7 +66,8 @@ const styles = StyleSheet.create({
     },
     titulo:{
         fontSize:35,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        marginLeft:'10%'
     },
     bloco:{
         width:'100%'
@@ -80,6 +85,7 @@ const styles = StyleSheet.create({
     },
     lista:{
      width:'90%',
-     height:'70%'   
+     height:'80%',
+     marginLeft:'10%'
     }
 });
